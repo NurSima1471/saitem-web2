@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --bg-void: #05070d;
-  --bg-panel: #0c1220;
-  --bg-panel-raised: #121a2c;
-  --line: #1e293b;
-  --text-primary: #f5f7fb;
-  --text-secondary: #8b96ad;
-  --text-dim: #55607a;
-  --accent: #ff7a1a;
-  --accent-soft: rgba(255, 122, 26, 0.16);
-  --ok: #22c55e;
-  --warn: #f59e0b;
-  --danger: #ef4444;
+  --bg-void: #eef1f6;
+  --bg-panel: #ffffff;
+  --bg-panel-raised: #f5f7fa;
+  --line: #dfe4ea;
+  --text-primary: #101826;
+  --text-secondary: #4b5768;
+  --text-dim: #8b95a5;
+  --accent: #0891a8;
+  --accent-soft: rgba(8, 145, 168, 0.12);
+  --ok: #16a34a;
+  --warn: #c2790a;
+  --danger: #dc2626;
   --font-display: "Rajdhani", "Arial Narrow", sans-serif;
   --font-body: "Inter", -apple-system, sans-serif;
   --font-mono: "JetBrains Mono", "Consolas", monospace;
@@ -54,13 +54,13 @@ body {
 
 ::selection {
   background: var(--accent);
-  color: #05070d;
+  color: #ffffff;
 }
 
 .bg-grid {
   background-image:
-    linear-gradient(rgba(255, 122, 26, 0.035) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 122, 26, 0.035) 1px, transparent 1px);
+    linear-gradient(rgba(8, 145, 168, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 145, 168, 0.05) 1px, transparent 1px);
   background-size: 42px 42px;
 }
 
@@ -84,7 +84,7 @@ body {
 
 input:-webkit-autofill {
   -webkit-text-fill-color: var(--text-primary);
-  -webkit-box-shadow: 0 0 0px 1000px #0c1220 inset;
+  -webkit-box-shadow: 0 0 0px 1000px #ffffff inset;
   transition: background-color 9999s ease-in-out 0s;
 }
 

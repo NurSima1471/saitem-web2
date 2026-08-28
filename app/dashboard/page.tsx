@@ -226,7 +226,7 @@ export default function DashboardPage() {
                 <button
                   onClick={gecmisExportEt}
                   disabled={gecmisExportYukleniyor}
-                  className="text-[11px] uppercase font-semibold border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[#0a0a0a] disabled:opacity-50 transition-colors rounded-md px-3 py-1.5"
+                  className="text-[11px] uppercase font-semibold border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white disabled:opacity-50 transition-colors rounded-md px-3 py-1.5"
                 >
                   {gecmisExportYukleniyor ? "Exporting..." : "Export CSV"}
                 </button>
