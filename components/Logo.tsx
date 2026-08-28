@@ -29,7 +29,8 @@ export function Logo({ className = "" }: { className?: string }) {
         letterSpacing="6"
         fill="var(--accent)"
       >
-        TELEMETRY
+        SPARK
+        
       </text>
       <rect x="0" y="14" width="4" height="34" fill="var(--accent)" opacity="0" />
     </svg>
