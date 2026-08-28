@@ -83,7 +83,7 @@ function GrafikKarti({
 export function TelemetriGrafikleri({ veri }: { veri: TelemetriKaydi[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      <GrafikKarti baslik="Speed" veri={veri} dataKey="speed" unit="km/h" renk="#ff7a1a" />
+      <GrafikKarti baslik="Speed" veri={veri} dataKey="speed" unit="km/h" renk="#0891a8" />
       <GrafikKarti baslik="Current" veri={veri} dataKey="current" unit="A" renk="#38bdf8" />
       <GrafikKarti baslik="Battery" veri={veri} dataKey="battery" unit="%" renk="#22c55e" />
       <GrafikKarti baslik="Voltage" veri={veri} dataKey="voltage" unit="V" renk="#a78bfa" />

@@ -58,7 +58,7 @@ export function TopBar({ connected, lastUpdateMs, pingMs }: TopBarProps) {
           <button
             onClick={exportEt}
             disabled={exportYukleniyor}
-            className="text-[10px] sm:text-[11px] tracking-wide uppercase font-semibold border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-[#0a0a0a] disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-md px-2.5 sm:px-3 py-1.5 whitespace-nowrap"
+            className="text-[10px] sm:text-[11px] tracking-wide uppercase font-semibold border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-md px-2.5 sm:px-3 py-1.5 whitespace-nowrap"
           >
             {exportYukleniyor ? "Exporting..." : "Export CSV"}
           </button>

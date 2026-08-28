@@ -5,7 +5,7 @@ const CH_HOST = process.env.CH_HOST || "95.217.216.31";
 const CH_PORT = process.env.CH_PORT || "48123";
 const CH_USER = process.env.CH_USER || "saitem";
 const CH_PASS = process.env.CH_PASS || "";
-const CH_DB = process.env.CH_DB || "saitem";
+const CH_DB = process.env.CH_DB || "saitem_arac2";
 const CH_TABLE = process.env.CH_TABLE || "telemetri";
 
 // NOT: Tablodaki kolon adi "soc" (battery degil). Burada "soc AS battery" ile
