@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Logo } from "./Logo";
 import { sonUcSaatiGetir, raceCsvOlustur, dosyaIndir, saatDakikaSaniyeMs } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 type TopBarProps = {
   connected: boolean;
@@ -12,6 +13,8 @@ type TopBarProps = {
 
 export function TopBar({ connected, lastUpdateMs, pingMs }: TopBarProps) {
   const [exportYukleniyor, setExportYukleniyor] = useState(false);
+    const router = useRouter();
+  const [cikisYapiliyor, setCikisYapiliyor] = useState(false);
   const lastUpdate = lastUpdateMs !== null ? saatDakikaSaniyeMs(lastUpdateMs) : "--:--:--.---";
 
   async function exportEt() {
@@ -29,6 +32,16 @@ export function TopBar({ connected, lastUpdateMs, pingMs }: TopBarProps) {
       alert("Export hatasi: " + (e instanceof Error ? e.message : String(e)));
     } finally {
       setExportYukleniyor(false);
+    }
+  }
+
+    async function cikisYap() {
+    setCikisYapiliyor(true);
+    try {
+      await fetch("/api/logout", { method: "POST" });
+    } finally {
+      router.push("/login");
+      router.refresh();
     }
   }
 
@@ -61,6 +74,14 @@ export function TopBar({ connected, lastUpdateMs, pingMs }: TopBarProps) {
             className="text-[10px] sm:text-[11px] tracking-wide uppercase font-semibold border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors rounded-md px-2.5 sm:px-3 py-1.5 whitespace-nowrap"
           >
             {exportYukleniyor ? "Exporting..." : "Export CSV"}
+          
+          </button>
+                    <button
+            onClick={cikisYap}
+            disabled={cikisYapiliyor}
+            className="text-[10px] sm:text-[11px] tracking-wide uppercase font-semibold border border-[var(--line)] text-[var(--text-secondary)] hover:border-[var(--danger)] hover:text-[var(--danger)] disabled:opacity-50 transition-colors rounded-md px-2.5 sm:px-3 py-1.5 whitespace-nowrap"
+          >
+            {cikisYapiliyor ? "..." : "Log Out"}
           </button>
 
           <div className="text-right">

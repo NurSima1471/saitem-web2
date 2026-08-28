@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
-import { useRouter } from "next/navigation";
+
 import { TopBar } from "@/components/TopBar";
 import { Tabs } from "@/components/Tabs";
 import { Gauge } from "@/components/Gauge";
@@ -31,7 +31,7 @@ const SEKMELER = [
 ];
 
 export default function DashboardPage() {
-  const router = useRouter();
+  
   const [ready, setReady] = useState(false);
   const [tab, setTab] = useState("canli");
   const gaugeSize = useGaugeSize();
@@ -54,13 +54,9 @@ export default function DashboardPage() {
   const [gecmisHata, setGecmisHata] = useState<string | null>(null);
   const [gecmisExportYukleniyor, setGecmisExportYukleniyor] = useState(false);
 
-  useEffect(() => {
-    if (sessionStorage.getItem("saitem_auth") !== "1") {
-      router.replace("/login");
-    } else {
-      setReady(true);
-    }
-  }, [router]);
+   useEffect(() => {
+    setReady(true);
+  }, []);
 
   const cek = useCallback(async () => {
     const basla = performance.now();

@@ -11,7 +11,7 @@ export default function LoginPage() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e: React.FormEvent) {
+    async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError("");
 
@@ -21,11 +21,23 @@ export default function LoginPage() {
     }
 
     setLoading(true);
-    setTimeout(() => {
-      sessionStorage.setItem("saitem_auth", "1");
-      sessionStorage.setItem("saitem_user", username.trim());
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ kullaniciAdi: username.trim(), sifre: password }),
+      });
+      const json = await res.json();
+      if (!json.success) {
+        setError(json.error || "Kullanici adi veya sifre hatali.");
+        setLoading(false);
+        return;
+      }
       router.push("/dashboard");
-    }, 400);
+    } catch {
+      setError("Sunucuya ulasilamadi, tekrar deneyin.");
+      setLoading(false);
+    }
   }
 
   return (
