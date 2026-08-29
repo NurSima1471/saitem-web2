@@ -2,6 +2,8 @@
 
 import { useEffect, useState, useCallback } from "react";
 
+import { LiveClock } from "@/components/LiveClock";
+
 import { TopBar } from "@/components/TopBar";
 import { Tabs } from "@/components/Tabs";
 import { Gauge } from "@/components/Gauge";
@@ -17,6 +19,7 @@ import {
   sonUcSaatiGetir,
   raceCsvOlustur,
   dosyaIndir,
+  isoToChStr,
   type TelemetriKaydi,
   type SurusOzeti,
 } from "@/lib/api";
@@ -57,6 +60,42 @@ export default function DashboardPage() {
    useEffect(() => {
     setReady(true);
   }, []);
+
+
+  // yaris start/stop
+  const [sessionStartTs, setSessionStartTs] = useState<number | null>(null);
+  const [sessionEndTs, setSessionEndTs] = useState<number | null>(null);
+  const [sessionExportYukleniyor, setSessionExportYukleniyor] = useState(false);
+
+  function startBas() {
+    setSessionStartTs(Date.now());
+    setSessionEndTs(null);
+  }
+
+  function stopBas() {
+    setSessionEndTs(Date.now());
+  }
+
+  async function sessionExportEt() {
+    if (!sessionStartTs || !sessionEndTs) return;
+    setSessionExportYukleniyor(true);
+    try {
+      const kayitlar = await aralikVerileri(isoToChStr(sessionStartTs), isoToChStr(sessionEndTs));
+      if (kayitlar.length === 0) {
+        alert("Bu aralikta kayit bulunamadi.");
+        return;
+      }
+      const csv = raceCsvOlustur(kayitlar);
+      const zaman = new Date().toISOString().replace(/[:.]/g, "-").slice(0, 19);
+      dosyaIndir(`RaceLog_Session_${zaman}.csv`, csv);
+    } catch (e) {
+      alert("Export hatasi: " + (e instanceof Error ? e.message : String(e)));
+    } finally {
+      setSessionExportYukleniyor(false);
+    }
+  }
+
+
 
   const cek = useCallback(async () => {
     const basla = performance.now();
@@ -164,6 +203,42 @@ export default function DashboardPage() {
                 {ortalamaHiz.toFixed(1)} km/h
               </span>
             </div>
+
+
+
+                        <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-4 mb-4">
+              <div className="text-2xl sm:text-3xl font-mono tabular-nums text-[var(--text-primary)] border border-[var(--line)] bg-[var(--bg-panel)] rounded-full px-6 py-2.5">
+                <LiveClock startTs={sessionStartTs} endTs={sessionEndTs} />
+              </div>
+
+              {!sessionStartTs || sessionEndTs ? (
+                <button
+                  onClick={startBas}
+                  className="text-xs uppercase font-semibold border border-[var(--ok)] text-[var(--ok)] hover:bg-[var(--ok)] hover:text-white transition-colors rounded-md px-4 py-2.5"
+                >
+                  Start
+                </button>
+              ) : (
+                <button
+                  onClick={stopBas}
+                  className="text-xs uppercase font-semibold border border-[var(--danger)] text-[var(--danger)] hover:bg-[var(--danger)] hover:text-white transition-colors rounded-md px-4 py-2.5"
+                >
+                  Stop
+                </button>
+              )}
+
+              {sessionStartTs && sessionEndTs && (
+                <button
+                  onClick={sessionExportEt}
+                  disabled={sessionExportYukleniyor}
+                  className="text-xs uppercase font-semibold border border-[var(--accent)] text-[var(--accent)] hover:bg-[var(--accent)] hover:text-white disabled:opacity-50 transition-colors rounded-md px-4 py-2.5"
+                >
+                  {sessionExportYukleniyor ? "Exporting..." : "Export Session CSV"}
+                </button>
+              )}
+            </div>
+
+
 
             <LiveTable kayitlar={kayitlar} />
           </>
