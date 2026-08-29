@@ -29,7 +29,7 @@ export type SurusOzeti = {
 const GECIKME_ESIGI_SN = 8;
 
 function parseTarih(s: string): number {
-  return Date.parse(s.replace(" ", "T"));
+  return Date.parse(s.replace(" ", "T") + "Z");
 }
 
 // Saat:dakika:saniye.ms formatinda (24 saat, her zaman saat dahil) - ana ekranda
